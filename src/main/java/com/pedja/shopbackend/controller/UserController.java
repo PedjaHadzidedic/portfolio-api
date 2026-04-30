@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import com.pedja.shopbackend.dto.UserDTO;
+import com.pedja.shopbackend.dto.ApiResponse;
 
 @RestController
 @RequestMapping("/users")
@@ -19,31 +21,53 @@ public class UserController {
 
     // GET all users
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ApiResponse<List<UserDTO>> getAllUsers() {
+        return new ApiResponse<>(
+                true,
+                userService.getAllUsers(),
+                null
+        );
     }
 
     // GET user by id
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public ApiResponse<UserDTO> getUserById(@PathVariable Long id) {
+        return new ApiResponse<>(
+                true,
+                userService.getUserById(id),
+                null
+        );
     }
 
     // CREATE user
     @PostMapping
-    public User createUser(@Valid @RequestBody User user) {
-        return userService.createUser(user);
+    public ApiResponse<UserDTO> createUser(@Valid @RequestBody User user) {
+        return new ApiResponse<>(
+                true,
+                userService.createUser(user),
+                "User created successfully"
+        );
     }
 
     // UPDATE user
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
-        return userService.updateUser(id, user);
+    public ApiResponse<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
+        return new ApiResponse<>(
+                true,
+                userService.updateUser(id, user),
+                "User updated successfully"
+        );
     }
 
     // DELETE user
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public ApiResponse<String> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+
+        return new ApiResponse<>(
+                true,
+                null,
+                "User deleted successfully"
+        );
     }
 }
