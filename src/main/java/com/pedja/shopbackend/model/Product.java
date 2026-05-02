@@ -19,6 +19,11 @@ public class Product {
     @NotNull(message = "Price is required")
     private Double price;
 
+    // OWNER of product
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Product() {}
 
     public Long getId() {
@@ -33,11 +38,19 @@ public class Product {
         return price;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
