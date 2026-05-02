@@ -29,6 +29,13 @@ public class ProductController {
         return productService.createProduct(product);
     }
 
+    // CREATE product for specific user
+    @PostMapping("/user/{userId}")
+    public Product createProductForUser(@PathVariable Long userId,
+                                        @Valid @RequestBody Product product) {
+        return productService.createProductForUser(userId, product);
+    }
+
     // DELETE product
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
