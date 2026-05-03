@@ -5,6 +5,8 @@ import com.pedja.shopbackend.model.Order;
 import com.pedja.shopbackend.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -18,5 +20,9 @@ public class OrderController {
     @PostMapping
     public Order createOrder(@RequestBody OrderRequest request) {
         return orderService.createOrder(request);
+    }
+    @GetMapping("/user/{userId}")
+    public List<Order> getOrdersByUser(@PathVariable Long userId) {
+        return orderService.getOrdersByUser(userId);
     }
 }

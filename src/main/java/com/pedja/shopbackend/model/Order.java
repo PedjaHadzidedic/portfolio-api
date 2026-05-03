@@ -3,8 +3,10 @@ package com.pedja.shopbackend.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -19,6 +21,7 @@ public class Order {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("order")
     private List<OrderItem> items;
 
     public Order() {}

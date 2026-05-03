@@ -1,6 +1,7 @@
 package com.pedja.shopbackend.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class OrderItem {
@@ -10,6 +11,7 @@ public class OrderItem {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     private Order order;
 
     @ManyToOne
