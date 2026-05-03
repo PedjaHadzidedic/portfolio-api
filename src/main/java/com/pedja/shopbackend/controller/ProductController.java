@@ -22,6 +22,11 @@ public class ProductController {
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
+    // GET products by user ID
+    @GetMapping("/user/{userId}")
+    public List<Product> getProductsByUser(@PathVariable Long userId) {
+        return productService.getProductsByUser(userId);
+    }
 
     // CREATE product
     @PostMapping
@@ -41,4 +46,5 @@ public class ProductController {
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
     }
+
 }

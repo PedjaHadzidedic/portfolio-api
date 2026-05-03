@@ -24,6 +24,10 @@ public class ProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+    // GET all products for a specific user
+    public List<Product> getProductsByUser(Long userId) {
+        return productRepository.findByUserId(userId);
+    }
 
     // CREATE product
     public Product createProduct(Product product) {
@@ -45,4 +49,5 @@ public class ProductService {
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
 }
