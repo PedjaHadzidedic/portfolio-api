@@ -1,7 +1,7 @@
 package com.pedja.shopbackend.controller;
 
 import com.pedja.shopbackend.dto.OrderRequest;
-import com.pedja.shopbackend.model.Order;
+import com.pedja.shopbackend.dto.OrderResponse;
 import com.pedja.shopbackend.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +17,15 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    // CREATE ORDER
     @PostMapping
-    public Order createOrder(@RequestBody OrderRequest request) {
+    public OrderResponse createOrder(@RequestBody OrderRequest request) {
         return orderService.createOrder(request);
     }
+
+    // GET ORDERS BY USER
     @GetMapping("/user/{userId}")
-    public List<Order> getOrdersByUser(@PathVariable Long userId) {
+    public List<OrderResponse> getOrdersByUser(@PathVariable Long userId) {
         return orderService.getOrdersByUser(userId);
     }
 }

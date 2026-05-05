@@ -1,7 +1,9 @@
 package com.pedja.shopbackend.service;
 
 import com.pedja.shopbackend.dto.OrderItemRequest;
+import com.pedja.shopbackend.dto.OrderItemResponse;
 import com.pedja.shopbackend.dto.OrderRequest;
+import com.pedja.shopbackend.dto.OrderResponse;
 import com.pedja.shopbackend.model.*;
 import com.pedja.shopbackend.repository.*;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,8 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
-    public Order createOrder(OrderRequest request) {
+    // CREATE ORDER (DTO RESPONSE)
+    public OrderResponse createOrder(OrderRequest request) {
 
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -54,10 +57,46 @@ public class OrderService {
         order.setItems(items);
         order.setTotalPrice(total);
 
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+
+        return mapToResponse(savedOrder);
     }
-    // GET orders by user
-    public List<Order> getOrdersByUser(Long userId) {
-        return orderRepository.findByUserId(userId);
+
+    // GET orders by user (DTO)
+    public List<OrderResponse> getOrdersByUser(Long userId) {
+
+        List<Order> orders = orderRepository.findByUserId(userId);
+        List<OrderResponse> responses = new ArrayList<>();
+
+        for (Order order : orders) {
+            responses.add(mapToResponse(order));
+        }
+
+        return responses;
+    }
+
+    // MAPPING ENTITY → DTO
+    private OrderResponse mapToResponse(Order order) {
+
+        OrderResponse response = new OrderResponse();
+        response.setId(order.getId());
+        response.setUserName(order.getUser().getName());
+        response.setTotalPrice(order.getTotalPrice());
+
+        List<OrderItemResponse> itemResponses = new ArrayList<>();
+
+        for (OrderItem item : order.getItems()) {
+
+            OrderItemResponse itemResponse = new OrderItemResponse();
+            itemResponse.setProductName(item.getProduct().getName());
+            itemResponse.setQuantity(item.getQuantity());
+            itemResponse.setPrice(item.getPrice());
+
+            itemResponses.add(itemResponse);
+        }
+
+        response.setItems(itemResponses);
+
+        return response;
     }
 }
