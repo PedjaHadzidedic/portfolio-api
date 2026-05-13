@@ -19,4 +19,9 @@ public class AuthController {
     public User register(@RequestBody User user) {
         return authService.register(user);
     }
+    // LOGIN USER
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        return authService.login(user);
+    }
 }

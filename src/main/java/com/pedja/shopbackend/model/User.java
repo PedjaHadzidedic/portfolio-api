@@ -17,6 +17,7 @@ public class User {
     private String name;
 
     // EMAIL
+    @Column(unique = true)
     @Email(message = "Invalid email format")
     @NotBlank(message = "Email is required")
     private String email;
