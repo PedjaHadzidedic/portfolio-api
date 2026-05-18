@@ -11,6 +11,7 @@ public class JwtService {
 
     private final String SECRET_KEY = "mySecretKey";
 
+    // GENERATE JWT TOKEN
     public String generateToken(String email) {
 
         return Jwts.builder()
